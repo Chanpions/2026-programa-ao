@@ -13,7 +13,14 @@ for (let i = 0; i < botoes.length; i++) {
 }
 const contadores = document.querySelectorAll(".contador");
 const tempoObjetivo1 = new Date("2027-10-05T00:00:00");
+const tempoObjetivo2 = new Date("2027-12-05T00:00:00");
+const tempoObjetivo3 = new Date("2027-12-30T00:00:00");
+const tempoObjetivo4 = new Date("2028-02-01T00:00:00");
+for (let i = 0; i < contadores.length; i++) {
+  contadores[i].textContent = calculaTempo(tempos[i]);
+}
 let tempoAtual = new Date();
+const tempos = [tempoObjetivo1, tempoObjetivo2, tempoObjetivo3, tempoObjetivo4];
 
 function calculaTempo(tempoObjetivo) {
   let tempoAtual = new Date();
@@ -25,6 +32,7 @@ function calculaTempo(tempoObjetivo) {
   segundos %= 60;
     minutos %= 60;
     horas %= 24;
+  if (tempoFinal > 0) {
   return (
     dias +
     " dias " +
@@ -35,9 +43,18 @@ function calculaTempo(tempoObjetivo) {
     segundos +
     " segundos"
   );
+} else {
+  return "Prazo Finalizado";
+}
+}
+function atualizaCronometro() {
+  for (let i = 0; i < contadores.length; i++) {
+    contadores[i].textContent = calculaTempo(tempos[i]);
+  }
+}
+function comecaCronometro() {
+  atualizaCronometro();
+  setInterval(atualizaCronometro, 1000);
 }
 
-contadores[0].textContent = calculaTempo(tempoObjetivo1);
-const tempoObjetivo2 = new Date("2027-12-05T00:00:00");
-const tempoObjetivo3 = new Date("2027-12-30T00:00:00");
-const tempoObjetivo4 = new Date("2028-02-01T00:00:00");
+comecaCronometro();
